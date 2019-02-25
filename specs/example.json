@@ -1,7 +1,7 @@
 {
   "mdcf": "1.0.0",
   "id": "payment-service",
-  "url": "http://github.com/xxx",
+  "url": "https://github.com/solusoftsl",
   "name": "Payments Management Service :)",
   "description": "This service allows consumers to sign up and administer the preferences for the 'Customer centric payments' product.",
   "capabilities": [ 
