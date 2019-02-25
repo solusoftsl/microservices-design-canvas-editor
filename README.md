@@ -2,7 +2,7 @@
 permalink: /index.html
 ---
 
-# microservices-design-canvas-frame
+# microservices-design-canvas-editor
 
 We have worked in a json spec based on the Microservice Design Canvas from Capital One. 
 This specification can be included and stored in the same microservice's source code repository (or even versioned :S), and embed in documentation related to the microservice.
