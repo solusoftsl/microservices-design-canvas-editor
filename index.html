@@ -141,6 +141,8 @@
               File
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#jsonModal">Import Json</a>
+              <div class="dropdown-divider"></div>
               <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#urlModal">Import URL</a>
               <a class="dropdown-item" id="reloadUrl" href="javascript:void(0);">Reload URL</a>
               <div class="dropdown-divider"></div>
@@ -209,6 +211,28 @@
               </div>
             </div>
           </div>
+
+          
+          <!-- Json Modal -->
+          <div class="modal fade" id="jsonModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Enter the MDC Json spec to import:</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                  </div>
+                  <div class="modal-body">
+                    <textarea class="form-control" id="jsonSpecInput" rows="10" spellcheck="false" placeholder="Your MDC Json spec here..." ></textarea>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="onJsonSpecButton" data-dismiss="modal">Accept</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+                </div>
+              </div>
+            </div>
 
           <!-- canvas -->
           <div class="card text-center tabs">

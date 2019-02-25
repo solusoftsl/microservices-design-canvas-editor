@@ -203,6 +203,17 @@
       $("#onURLInput").click(() => {
         onURLInput($("#urlInput").val(), schema);
       });
+
+      $("#onJsonSpecButton").click(() => {
+        try {
+          let json = $("#jsonSpecInput").val();
+          json = JSON.parse(json);
+          onJSONInput(json, schema);
+          editor.set(json);
+        } catch (err) {
+
+        }
+      });
     }
 
     /**

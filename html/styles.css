@@ -334,3 +334,6 @@ body {
   text-decoration: none;
   color: black;
 }
+#link {
+  padding-right: 5px
+}
