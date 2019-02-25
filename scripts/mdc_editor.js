@@ -145,8 +145,8 @@
     function printCanvas({ base64json, url }) {      
       let absoluteUrl = "html/iframe.html";
       
-      if (base64json) absoluteUrl = getUrl("html/iframe.html?base64json=" + base64json);
-      else if (url) absoluteUrl = getUrl("html/iframe.html?url=" + encodeURIComponent(url));
+      if (base64json) absoluteUrl = getUrl("html/iframe.html?hf=true&base64json=" + base64json);
+      else if (url) absoluteUrl = getUrl("html/iframe.html?hf=true&url=" + encodeURIComponent(url));
 
       $( "#mdc_iframe" ).attr('src', absoluteUrl);
     }

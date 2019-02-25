@@ -97,7 +97,11 @@
     if (url) url = decodeURIComponent(url);
     let encoded_json = getUrlParam("base64json");
     if (encoded_json) {
+      try {
       mdc_json = JSON.parse(window.atob(encoded_json));
+      } catch (err) {
+        console.log(err);
+      }
     };
 
     //mdc spec could be recovered from url, for instance: https://findemor.github.io/microservices-design-canvas-frame/specs/example.json
@@ -107,6 +111,12 @@
     //setup editor link
     let editorParam = "?" + (url ? "url=" + encodeURIComponent(url) : (encoded_json ? "base64json=" + encoded_json : ""));
     $("#editor").attr("href", "https://solusoftsl.github.io/microservices-design-canvas-editor" + editorParam);
+
+    //hide footer
+    let hide = getUrlParam("hf");
+    if (hide) {
+      $(".footer").hide();
+    }
   </script>
 
 </body>
