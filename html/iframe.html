@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<title>MCD frame</title>
+  <link rel="stylesheet" href="styles.css">
+  
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" ></script>
+  <script src="../scripts/mdc.js"></script>
+</head>
+<body>
+
+  <div class="frame" id="frame">
+    <div class="row_frame row_frame_1">
+      <div class="column_frame column_frame_1">
+        <p class="title">Name:</p>
+        <div class="values">
+          <div id="link"></div>
+          <p id="name" class="value"></p>
+        </div>
+      </div>
+      <div class="column_frame">
+        <p class="title">Description:</p>
+        <div class="values">
+          <p id="description" class="value"></p>
+        </div>
+      </div>
+    </div>
+    <div class="row_frame row_frame_2">
+      <div class="column_frame">
+        <p class="title title_column">Consumer Tasks/Capabilities:</p>
+        <ul id="capabilities" class="values values_list"></ul>
+      </div>
+    </div>
+    <div class="row_frame row_frame_3">
+      <div class="row_in_column row_in_column_title r1c1">
+        <p class="title title_column">Implementation</p>
+      </div>
+      <div class="row_in_column r2c1">
+        <p class="title title_list">Qualities</p>
+        <ul id="implementation_qualities" class="values"></ul>
+      </div>
+      <div class="row_in_column r3c1">
+        <p class="title title_list">Logic</p>
+        <ul id="implementation_logic" class="values"></ul>
+      </div>
+      <div class="row_in_column r4c1">
+        <p class="title title_list">Data</p>
+        <ul id="implementation_data" class="values"></ul>
+      </div>
+      <div class="row_in_column row_in_column_title r1c2">
+        <p class="title title_column">Dependencies</p>
+      </div>
+      <div class="row_in_column row_in_column_2 r2c2">
+        <p class="title title_list">Service Dependencies</p>
+        <ul id="dependencies_servicesDependencies" class="values"></ul>
+      </div>
+      <div class="row_in_column r3c2">
+        <p class="title title_list">Events Subscriptions</p>
+        <ul id="dependencies_eventsSubscriptions" class="values"></ul>
+      </div>	
+      <div class="row_in_column row_in_column_title r1c3">
+        <p class="title title_column">Interface</p>
+      </div>
+      <div class="row_in_column r2c3">
+        <p class="title title_list">Queries</p>
+        <ul id="interface_queries" class="values"></ul>
+      </div>
+      <div class="row_in_column r3c3">
+        <p class="title title_list">Commands</p>
+        <ul id="interface_commands" class="values"></ul>
+      </div>
+      <div class="row_in_column r4c3">
+        <p class="title title_list">Events Published</p>
+        <ul id="interface_eventsPublished" class="values"></ul>
+      </div>			
+    </div>
+  </div>
+
+
+  <div class="footer">
+    <a id="editor" target="_blank" alt="Open in MDC Editor">Open in MDC Editor</a>, supported by <a target="_blank" href="https://www.solusoft.es" alt="Solusoft">Solusoft</a>
+  </div>
+
+  
+  <script>
+    //if specified, this json will be used
+    var mdc_json = null;
+
+    function getUrlParam(name) {
+      var results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.search);
+      return (results !== null) ? results[1] || 0 : false;
+    }
+
+    //if base64json exist, it is supposed to be a base64 mdc json encoded file
+    let url = getUrlParam("url");
+    if (url) url = decodeURIComponent(url);
+    let encoded_json = getUrlParam("base64json");
+    if (encoded_json) {
+      mdc_json = JSON.parse(window.atob(encoded_json));
+    };
+
+    //mdc spec could be recovered from url, for instance: https://findemor.github.io/microservices-design-canvas-frame/specs/example.json
+
+    $( "#frame" ).mdc({ url, json: mdc_json });
+
+    //setup editor link
+    let editorParam = url ? "url=" + encodeURIComponent(url) : "base64json=" + encoded_json;
+    $("#editor").attr("href", "http://localhost?" + editorParam);
+  </script>
+
+</body>
+</html>

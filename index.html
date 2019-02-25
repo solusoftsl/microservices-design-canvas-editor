@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="html/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <script src="scripts/mdc.js"></script>
+  <script src="scripts/tv4.min.js"></script>
+
+
+
+  <link href="scripts/jsoneditor/jsoneditor.min.css" rel="stylesheet" type="text/css">
+  <script src="scripts/jsoneditor/jsoneditor-minimalist.js"></script>
+
+  <style>
+    html, body {
+      height: 100%;
+    }
+    .wrapper {
+      display:flex;
+      height:100%;
+      flex-direction:column;
+      flex-wrap:nowrap;
+    }
+    .navbar {
+      flex:none;
+    }
+    .container-fluid {
+      display:flex;
+      flex-direction:row;
+      flex-wrap:wrap;
+      flex:1;
+      width:100%;
+      padding: 0px;
+    }
+    .container-fluid .row {
+      width:100%;
+    }
+    div.jsoneditor {
+      border: thin solid #343a40;
+    }
+
+    div.jsoneditor-menu {
+      background-color: #343a40;
+      border-bottom: thin solid #343a40;
+    }
+
+    .tabs {
+      margin-top: 15px;
+      display:flex;
+      flex-direction:column;
+      flex-wrap:nowrap;
+    }
+    .tabs .card-header {
+      flex:none;
+    }
+    .tabs .tab-content {
+      flex:1;
+      display:flex;
+      flex-direction:column;
+      flex-wrap:nowrap;
+    }
+    .tab-content>.tab-pane {
+      height:100%;
+    }
+    #iframe_container {
+      height:100%;
+    }
+
+    #iframe_container iframe {
+      height:99%;
+      border:0;
+    }
+    #error {
+      margin-top: 15px;
+    }
+    .colH {
+      display:flex;
+      flex-direction:column;
+      flex-wrap:nowrap;
+      padding: 0px;
+    }
+    .colH .card {
+      flex:1;
+    }
+    .colH .card:first-of-type {
+      flex:none;
+    }
+
+
+
+    .tabs > .card-header{
+      background-color:#343a40;
+    }
+    .tab-content{
+        /*background-color:#303136;
+        color:#fff;
+        padding:5px*/
+    }
+    .nav-tabs > li > a{
+      border: medium none !important;
+      color: whitesmoke;
+    }
+    .nav-tabs > li > a:hover{
+      background-color: #343a40;
+      border: 0;
+      color: whitesmoke;
+    }
+
+    .nav-tabs > li > a.active {
+      color: #495057;
+      background-color: #fff;
+      border-color: #dee2e6 #dee2e6 #fff;
+    }
+  </style>
+
+  <title>Hello, world!</title>
+</head>
+
+<body id="mdc_editor">
+  <div class="wrapper">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="/">
+        <img src="html/logo_solusoft_verde.png" width="30" height="30" alt=""> MDC Editor
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+        aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              File
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="javascript:void(0);" data-toggle="modal" data-target="#urlModal">Import URL</a>
+              <a class="dropdown-item" id="reloadUrl" href="javascript:void(0);">Reload URL</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" id="loadExample" href="javascript:void(0);">Load Example</a>
+            </div>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="javascript:void(0);" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              About
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" id="loadExample" href="https://findemor.github.io/microservices-design-canvas-frame/">GitHub (Source Code)</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="http://www.solusoft.es" target="_blank" data-toggle="modal" data-target="#urlModal">Supported by Solusoft</a>
+            </div>
+          </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <button id="downloadBtn" class="btn btn-outline-success my-2 my-sm-0" type="button">Download Json</button>
+          <div id="downloadBtnPlaceholder"></div>
+        </form>
+        
+      </div>
+    </nav>
+
+    <div class="container-fluid maxH">
+      <div class="row maxH">
+        <div class="col-6 col-lg-5 col-xl-4 maxH colI">
+          <div id="jsonInput" style="width: 100%; height: 100%;"></div>
+        </div>
+
+        <!-- col derecha-->
+        <div class="col-6 col-lg-7 col-xl-8 maxH colH">
+
+          <!--Error-->
+          <div class="card text-white border-danger" id="error" style="display: none;">
+            <div class="card-header bg-danger">Input Validation Error</div>
+            <div class="card-body text-danger bg-transparent border-danger">
+              <h5 class="card-title" id="error-desc"></h5>
+              <p class="card-text" id="error-message"></p>
+            </div>
+            <div class="card-footer bg-transparent border-danger">
+              <a href="specs/schema.json" target="_blank" class="card-link">Json Schema</a>
+              <a href="specs/example.json" target="_blank" class="card-link">Json example</a>
+            </div>
+          </div>
+
+          <!-- URL Modal -->
+          <div class="modal fade" id="urlModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Enter the URL to import from:</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <input type="text" class="form-control" id="urlInput" spellcheck="false" placeholder="Your MDC Json URL here..." aria-describedby="basic-addon3">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-primary" id="onURLInput" data-dismiss="modal">Accept</button>
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- canvas -->
+          <div class="card text-center tabs">
+            <div class="card-header">
+              <ul class="nav nav-tabs card-header-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                  <a class="nav-link active" id="canvas-tab" data-toggle="tab" href="#canvas" role="tab" aria-controls="canvas" aria-selected="true">Canvas</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="share-tab" data-toggle="tab" href="#share" role="tab" aria-controls="share" aria-selected="false">Share</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" id="help-tab" data-toggle="tab" href="#help" role="tab" aria-controls="help" aria-selected="false">Help</a>
+                </li>
+              </ul>
+            </div>
+            <div class="tab-content" id="myTabContent">
+              <div class="tab-pane fade show active" id="canvas" role="tabpanel" aria-labelledby="canvas-tab">
+                <!--canvas tab-->
+                <div id="iframe_container">
+                  <iframe id="mdc_iframe" width="100%" src="html/iframe.html"></iframe>
+                </div>
+                <!--end canvas tab-->
+              </div>
+              <div class="tab-pane fade" id="share" role="tabpanel" aria-labelledby="share-tab">
+                <!--share tab-->
+                <div class="card-body  text-left">
+                  <h5 class="card-title">Share this Microservice Design Canvas</h5>
+                  
+                  <label for="shareLinkURL">Link with embed URL</label>
+                  <div class="input-group">
+                    <input id="shareLinkURL" type="text" class="form-control" placeholder="URL" readonly>
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" type="button" id="CopyShareLinkURL">Copy</button>
+                    </div>
+                  </div>
+                  <label for="shareLinkEmbed">Link with embed data</label>
+                  <div class="input-group">
+                      <input id="shareLinkEmbed" type="text" class="form-control" placeholder="URL" readonly>
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" type="button" id="CopyShareLinkEmbed">Copy</button>
+                    </div>
+                  </div>
+
+                  <label for="shareURL">Iframe with URL</label>
+                  <div class="input-group">
+                    <input id="shareURL" type="text" class="form-control" placeholder="iframe with URL" aria-label="iframe with URL" aria-describedby="button-addon2"
+                      readonly>
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" type="button" id="CopyShareURL" disabled="true">Copy</button>
+                    </div>
+                  </div>
+                  <label for="shareEmbed">Iframe with embedded data</label>
+                  <div class="input-group">
+                    <input id="shareEmbed" type="text" class="form-control" placeholder="iframe with embedded data" aria-label="iframe with embedded data"
+                      aria-describedby="button-addon2" readonly>
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" type="button" id="CopyShareEmbed" disabled="true">Copy</button>
+                    </div>
+                  </div>
+                </div>
+                <!-- end share div-->
+
+              </div>
+              <div class="tab-pane fade" id="help" role="tabpanel" aria-labelledby="help-tab">
+                <!--help tab-->
+                  <div class="card-body text-left">
+                    <h5 class="card-title">About this Tool</h5>
+                    <p class="card-text">We have worked in a json spec based on the Microservice Design Canvas from Capital One. This specification can be included and stored in the same microservice's source code repository (or even versioned :S), and embed in documentation related to the microservice.</p>
+                    <p class="card-text">This online editor allows to easily edit and generate canvas in a digital way.</p>
+                    <p class="card-text">This tool has been developed by <a href="http://www.solusoft.es" target="_blank">Solusoft</a></p>
+                    <a href="https://github.com/findemor/microservices-design-canvas-frame" target="_blank" class="btn btn-primary">Open this in GitHub</a>
+                  </div>
+                <!--end help tab-->
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="scripts/mdc_editor.js"></script>
+  <script src="scripts/popper.min.js"></script>
+  <script src="scripts/bootstrap.min.js"></script>
+
+    
+  <script>
+    function getUrlParam(name) {
+      let results = new RegExp('[\?&]' + name + '=([^&#]*)').exec(window.location.search);
+      return (results !== null) ? results[1] || 0 : false;
+    }
+  
+    let encoded_json = getUrlParam("base64json");
+    
+    let param_url = getUrlParam("url");
+    if (param_url) param_url = decodeURIComponent(param_url);
+    let param_json = null;
+    if (encoded_json) {
+      param_json = JSON.parse(window.atob(encoded_json));
+    };
+
+    $("#mdc_editor").mdc_editor({
+      domain: "http://localhost/",
+      url: param_url,
+      json: param_json,
+    });
+  </script>
+  
+</body>
+
+</html>

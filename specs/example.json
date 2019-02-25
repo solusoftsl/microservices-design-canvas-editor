@@ -1,0 +1,52 @@
+{
+  "mdcf": "1.0.0",
+  "id": "payment-service",
+  "url": "http://github.com/xxx",
+  "name": "Payments Management Service :)",
+  "description": "This service allows consumers to sign up and administer the preferences for the 'Customer centric payments' product.",
+  "capabilities": [ 
+    "Sign up for payments service",
+    "Opt out of payments service"
+  ],
+  "implementation": {
+    "qualities": [
+      "Audited",
+      "Low-volume",
+      "Non-critical"
+    ],
+    "logic": [
+      "Min accounts/products required for signup",
+      "Role-based permission"
+    ],
+    "data": [
+      "Customer signup status",
+      "Customer preferences"
+    ]
+  },
+  "dependencies": {
+    "serviceDependencies": [
+      {
+        "title": "Customer Information Service",
+        "list": [
+          "Obtain list of customer accounts and products",
+          "Requirement 2"
+        ]
+      },
+      "Another service requirement"
+    ],
+    "eventsSubscriptions": []
+  },
+  "interface": {
+    "queries": [
+      "Query 1",
+      "Query 2"
+    ],
+    "commands": [
+      "Command"
+    ],
+    "eventsPublished": [
+      "Event published 1",
+      "Event published 2"
+    ]
+  }
+}

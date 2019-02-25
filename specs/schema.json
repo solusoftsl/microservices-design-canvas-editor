@@ -1,0 +1,209 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+
+  "definitions": {
+    "infoBlock": {
+      "type": "object",
+      "title": "Information block for features highlighting",
+      "required": [
+        "title",
+        "list"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "title": "Information block title",
+          "examples": [ "Customer Information Service" ]
+        },
+        "list": {
+          "type": "array",
+          "title": "Features to incluide in this block",
+          "items": {
+            "type": "string",
+            "examples": [
+              "Obtain list of customer accounts and products",
+              "Requirement 2"
+            ]
+          }
+        }
+      }
+    },
+
+    "infoSimple": {
+      "type": "string",
+      "title": "Simple information",
+      "examples": [
+        "Audited",
+        "Low-volume",
+        "Non-critical"
+      ]
+    }
+  },
+
+  "type": "object",
+  "title": "Microservice Design Canvas root schema",
+  "required": [
+    "mdcf",
+    "id",
+    "url",
+    "name",
+    "description",
+    "capabilities",
+    "implementation",
+    "dependencies",
+    "interface"
+  ],
+  "properties": {
+    "mdcf": {
+      "type": "string",
+      "title": "Microservice Design Canvas schema version",
+      "default": "1.0.0",
+      "examples": [ "1.0.0" ]
+    },
+    "id": {
+      "type": "string",
+      "title": "Microservice unique identifier",
+      "examples": [ "payment-service" ]
+    },
+    "url": {
+      "type": "string",
+      "title": "Microservice website or repository",
+      "examples": [ "http://github.com/xxx" ]
+    },
+    "name": {
+      "type": "string",
+      "title": "Microservice name",
+      "examples": [ "Payments Management Service" ]
+    },
+    "description": {
+      "type": "string",
+      "title": "Microservice description",
+      "examples": [
+        "This service allows consumers to sign up and administer the preferences for the 'Customer centric payments' product."
+      ]
+    },
+    "capabilities": {
+      "type": "array",
+      "title": "Consumer Tasks or available capabilites",
+      "items": {
+        "type": "string",
+        "title": "Single capability description",
+        "examples": [
+          "Sign up for payments service",
+          "Opt out of payments service"
+        ]
+      }
+    },
+    "implementation": {
+      "type": "object",
+      "title": "Implementation related descriptions",
+      "required": [
+        "qualities",
+        "logic",
+        "data"
+      ],
+      "properties": {
+        "qualities": {
+          "type": "array",
+          "title": "The fundamental non-functional attributes of the service, such as specific security, availability, reliability, scalability, and evolvability requirements.",
+          "items": {
+            "anyOf": [
+              { "$ref": "#/definitions/infoSimple" },
+              { "$ref": "#/definitions/infoBlock" }
+            ]
+          }
+        },
+        "logic": {
+          "type": "array",
+          "title": "A selected list of processing logic that will be required to satisfy the Interface and Qualities sections, not an exhaustive list of the service's functionality",
+          "items": {
+            "anyOf": [
+              { "$ref": "#/definitions/infoSimple" },
+              { "$ref": "#/definitions/infoBlock" }
+            ]
+          }
+        },
+        "data": {
+          "type": "array",
+          "title": "A selected list of data elements required to support the Interface and Qualities sections",
+          "items": {
+            "anyOf": [
+              { "$ref": "#/definitions/infoSimple" },
+              { "$ref": "#/definitions/infoBlock" }
+            ]
+          }
+        }
+      }
+    },
+    "dependencies": {
+      "$id": "#/properties/dependencies",
+      "type": "object",
+      "title": "The external serivces upon which this service depends (with the understanding that service dependencies should be minimized)",
+      "required": [
+        "serviceDependencies",
+        "eventsSubscriptions"
+      ],
+      "properties": {
+        "serviceDependencies": {
+          "type": "array",
+          "title": "The Data Schema",
+          "items": {
+            "anyOf": [
+              { "$ref": "#/definitions/infoSimple" },
+              { "$ref": "#/definitions/infoBlock" }
+            ]
+          }
+        },
+        "eventsSubscriptions": {
+          "type": "array",
+          "title": "The Data Schema",
+          "items": {
+            "anyOf": [
+              { "$ref": "#/definitions/infoSimple" },
+              { "$ref": "#/definitions/infoBlock" }
+            ]
+          }
+        }
+      }
+    },
+    "interface": {
+      "$id": "#/properties/interface",
+      "type": "object",
+      "title": "A list of interactions that consumers are expected have with the service, broken down by interaction type (Query, Command, Event Subscription, Event Publication)",
+      "required": [
+        "queries",
+        "commands",
+        "eventsPublished"
+      ],
+      "properties": {
+        "queries": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              { "$ref": "#/definitions/infoSimple" },
+              { "$ref": "#/definitions/infoBlock" }
+            ]
+          }
+        },
+        "commands": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              { "$ref": "#/definitions/infoSimple" },
+              { "$ref": "#/definitions/infoBlock" }
+            ]
+          }
+        },
+        "eventsPublished": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              { "$ref": "#/definitions/infoSimple" },
+              { "$ref": "#/definitions/infoBlock" }
+            ]
+          }
+        }
+      }
+    }
+  }
+}
