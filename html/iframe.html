@@ -105,8 +105,8 @@
     $( "#frame" ).mdc({ url, json: mdc_json });
 
     //setup editor link
-    let editorParam = url ? "url=" + encodeURIComponent(url) : "base64json=" + encoded_json;
-    $("#editor").attr("href", "https://solusoftsl.github.io/microservices-design-canvas-editor?" + editorParam);
+    let editorParam = "?" + (url ? "url=" + encodeURIComponent(url) : (encoded_json ? "base64json=" + encoded_json : ""));
+    $("#editor").attr("href", "https://solusoftsl.github.io/microservices-design-canvas-editor" + editorParam);
   </script>
 
 </body>

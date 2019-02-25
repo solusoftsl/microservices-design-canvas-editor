@@ -119,7 +119,7 @@
         showError({});
         let base64json = window.btoa(JSON.stringify(json));
         printCanvas({ base64json });
-        setupShareModal({ base64json, url });
+        setupShareModal({ base64json });
       } else {
         showError(error);
       }
