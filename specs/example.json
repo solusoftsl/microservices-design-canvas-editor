@@ -1,52 +1,43 @@
 {
   "mdcf": "1.0.0",
-  "id": "payment-service",
+  "id": "gateway",
   "url": "https://github.com/solusoftsl",
-  "name": "Payments Management Service :)",
-  "description": "This service allows consumers to sign up and administer the preferences for the 'Customer centric payments' product.",
+  "name": "Gateway service",
+  "description": "This service allows to secure access to APIs by extracting and analyzing authorization tokens and then piping the request (or not).",
   "capabilities": [ 
-    "Sign up for payments service",
-    "Opt out of payments service"
+    "Homogeneous API Securization Layer",
+    "Avoids internal layers to deal with forbidden calls"
   ],
   "implementation": {
     "qualities": [
-      "Audited",
-      "Low-volume",
-      "Non-critical"
+      "HTTP REST compatible",
+      "Low resources requirements",
+      "Highly customizable (customizable connectors)",
+      "Unit testing",
+      "Unique access point for load-balancing and firewall rules config."
     ],
     "logic": [
-      "Min accounts/products required for signup",
-      "Role-based permission"
+      "Router-based permission",
+      "Connection established using HTTP pipes"
     ],
-    "data": [
-      "Customer signup status",
-      "Customer preferences"
-    ]
+    "data": []
   },
   "dependencies": {
     "serviceDependencies": [
       {
-        "title": "Customer Information Service",
+        "title": "Destination API (any)",
         "list": [
-          "Obtain list of customer accounts and products",
-          "Requirement 2"
+          "PUT / GET / POST / DELETE Operations",
+          "HTTP Rest API"
         ]
       },
-      "Another service requirement"
+      "Authorization Token in Header / Query parameter"
     ],
     "eventsSubscriptions": []
   },
   "interface": {
-    "queries": [
-      "Query 1",
-      "Query 2"
-    ],
-    "commands": [
-      "Command"
-    ],
-    "eventsPublished": [
-      "Event published 1",
-      "Event published 2"
-    ]
+    "queries": [],
+    "commands": [],
+    "eventsPublished": []
   }
 }
