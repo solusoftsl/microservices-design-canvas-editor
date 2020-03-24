@@ -333,9 +333,16 @@
     let param_url = getUrlParam("url");
     if (param_url) param_url = decodeURIComponent(param_url);
     let param_json = null;
-    if (encoded_json) {
+
+    try {
+      if (encoded_json) {
+        param_json = JSON.parse(window.atob(encoded_json));
+      };
+    } catch (ex) {
+      console.log(ex);
+      encoded_json = decodeURIComponent(encoded_json);
       param_json = JSON.parse(window.atob(encoded_json));
-    };
+    }
 
     $("#mdc_editor").mdc_editor({
       domain: "https://solusoftsl.github.io/microservices-design-canvas-editor/",

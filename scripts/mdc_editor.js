@@ -85,7 +85,6 @@
      * When Url changes...
      */
     function onURLInput(url, schema) {   
-
       $.getJSON(url)
       .done((json) => { 
         editor.set(json);
